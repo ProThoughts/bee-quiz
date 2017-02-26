@@ -1,0 +1,88 @@
+<html lang="ja" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+  <link rel="stylesheet" type="text/css" href="./style.css" media="all">
+</head>
+<body ng-app="MyApp" ng-cloak>
+<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+  <div id="top" ng-controller="AppCtrl">
+    <h3>{{ title }}</h3>
+    <p>{{ explanation }}</p>
+    <form name="questionForm" ng-submit="submit()" ng-cloak novalidate>
+      <div ng-if="questionForm.$submitted">
+        <p>あなたの得点は{{ score }} 点です</p>
+        <p>100点をとれなかった方は、<a href="{{ answer_ref }}" target="_blank">こちら</a>のページで学んでください。</p>
+      </div>
+      <div ng-repeat="(key, question) in questions">
+        <p>[問題{{key + 1}}] {{ question.title }} </p>
+        <md-radio-group ng-model='question.value' required>
+          <md-radio-button name="i-1" value="1" class="md-primary">はい</md-radio-button>
+          <md-radio-button name="i-0" value="0">いいえ</md-radio-button>
+          <div ng-if="questionForm.$submitted">
+    	    <div ng-if="question.value == question.answer">
+              <span>正解</span>
+	    </div>
+	    <div ng-if="question.value != question.answer">
+              <span>不正解</span>
+            </div>
+            <span>{{ question.explanation }}</span>
+          </div>
+        </md-radio-group>
+        <hr />
+      </div>
+      <div ng-if="questionForm.$submitted">
+        <button ng-click="reset()" type="button">再挑戦する</button>
+      </div>
+      <div ng-if="questionForm.$submitted == false">
+        <div ng-show="questionForm.$invalid">
+          <span>全て回答してください。</span>
+        </div>
+        <button class="md-raised md-primary md-button md-ink-ripple" ng-disabled="questionForm.$invalid" type="submit" >
+          <span class="ng-scope">採点する</span>
+          <div class="md-ripple-container"></div>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+<script type="text/javascript">    
+  angular.module('MyApp', ['ngMaterial']).controller('AppCtrl', function($scope, $http, $location, $anchorScroll) {
+    $http.get("./api/stub.json").then(function(response) {
+      $scope.questions = response.data.questions;
+      $scope.title = response.data.title;
+      $scope.explanation = response.data.explanation;
+      $scope.answer_ref = response.data.answer_ref;
+    });
+
+    $scope.submit = function() {
+
+      var correctQuestions = $scope.questions.filter(function(val) {
+        return (val.value == val.answer);
+      });
+      $scope.score = correctQuestions.length / $scope.questions.length * 100;
+      $location.hash('top');
+      $anchorScroll();
+    }
+
+    $scope.reset = function(){
+      angular.forEach($scope.questions, function(value, index) {
+        value.value = null;
+      });
+      $scope.questionForm.$setPristine();
+      $location.hash('top');
+      $anchorScroll();
+    }
+
+  }).config(function($mdIconProvider) {
+
+  });
+</script>
+</body>
+</html>
