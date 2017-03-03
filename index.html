@@ -6,34 +6,51 @@
   <link rel="stylesheet" type="text/css" href="./style.css" media="all">
 </head>
 <body ng-app="MyApp" ng-cloak>
-<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+<section layout="row" layout-sm="column" layout-align="center center" layout-wrap novalidate>
   <div id="top" ng-controller="AppCtrl">
     <h3>{{ title }}</h3>
     <p>{{ explanation }}</p>
-    <form name="questionForm" ng-submit="submit()" ng-cloak novalidate>
+    <form name="questionForm" ng-submit="submit()" ng-cloak >
       <div ng-if="questionForm.$submitted">
-        <p>あなたの得点は{{ score }} 点です</p>
-        <p>100点をとれなかった方は、<a href="{{ answer_ref }}" target="_blank">こちら</a>のページで学んでください。</p>
+        <p class="score">あなたの得点は{{ score }} 点です</p>
       </div>
+      <hr />
       <div ng-repeat="(key, question) in questions">
-        <p>[問題{{key + 1}}] {{ question.title }} </p>
-        <md-radio-group ng-model='question.value' required>
-          <md-radio-button name="i-1" value="1" class="md-primary">はい</md-radio-button>
-          <md-radio-button name="i-0" value="0">いいえ</md-radio-button>
+        <p>[問題{{key + 1}}] {{ question.title }}</p>
+        <div ng-if="questionForm.$submitted">
+          <span class="correct" ng-if="question.value == question.answer">おめでとうございます。正解です。</span>
+          <span class="incorrect" ng-if="question.value != question.answer">残念。不正解です。</span>
+        </div> 
+        <div ng-if="questionForm.$submitted == false">
+          <md-radio-group ng-model='question.value' required>
+            <md-radio-button name="i-1" value="1" class="md-primary">正しい</md-radio-button>
+            <md-radio-button name="i-0" value="0">間違い</md-radio-button>
+          </md-radio-group>
+	  </div>
           <div ng-if="questionForm.$submitted">
-    	    <div ng-if="question.value == question.answer">
-              <span>正解</span>
-	    </div>
-	    <div ng-if="question.value != question.answer">
-              <span>不正解</span>
-            </div>
-            <span>{{ question.explanation }}</span>
+            この記述は
+            <span ng-if="question.answer == 1">
+              正しい
+	    </span>
+            <span ng-if="question.answer == 0">
+              間違い
+	    </span>
+            <span>: {{ question.explanation }}</span>
           </div>
-        </md-radio-group>
         <hr />
       </div>
       <div ng-if="questionForm.$submitted">
+        <p class="score">あなたの得点は{{ score }} 点です</p>
         <button ng-click="reset()" type="button">再挑戦する</button>
+        <div>
+          <span>以下のページで分蜂について学んでみましょう。</span>
+          <ul>
+            <li><a href="https://syumatsu-yoho.com/38/node/1522" target="_blank">分蜂(分封、ぶんぽう)とは？ニホンミツバチが増える仕組み</a></li>
+            <li><a href="https://syumatsu-yoho.com/38/node/55" target="_blank">ニホンミツバチの捕獲方法と捕獲の8つのコツ</a></li>
+          </ul>
+          <p>また、ニホンミツバチについての質問は、<a href="https://38qa.net/">ニホンミツバチのQ&A</a>までお寄せください。ニホンミツバチ最大のコミュニティです。</p>
+          <p>※このクイズは、京都ニホンミツバチ週末養蜂の会の飼育方法に基づいております。</p>
+        </div>
       </div>
       <div ng-if="questionForm.$submitted == false">
         <div ng-show="questionForm.$invalid">

@@ -1,1 +1,9 @@
-
+.score {
+  color: red;
+}
+.correct {
+  color: blue;
+}
+.incorrect {
+  color: red;
+}
