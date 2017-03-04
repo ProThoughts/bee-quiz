@@ -79,10 +79,22 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
 <script type="text/javascript">    
-  angular.module('MyApp', ['ngMaterial']).controller('AppCtrl', function($scope, $http, $location, $anchorScroll) {
-
-    $http.get("./api/question1.json").then(function(response) {
+  var app = angular.module('MyApp', ['ngMaterial', 'ngRoute']);
+  app.config(['$routeProvider', function($routeProvider){
+    $routeProvider.when('/:_id', {
+      controller: 'AppCtrl'
+    });
+  }]);
+  app.controller('AppCtrl', function($scope, $http, $location, $anchorScroll, $routeParams) {
+    var id = $routeParams._id;
+    console.log($routeParams);
+    if(!id) {
+      id = 1;
+    }
+    var questionFilePath = './api/question' + id + '.json';
+    $http.get(questionFilePath).then(function(response) {
       $scope.questions = response.data.questions;
       $scope.title = response.data.title;
       $scope.explanation = response.data.explanation;
@@ -96,7 +108,7 @@
         return (val.value == val.answer);
       });
       $scope.score = correctQuestions.length / $scope.questions.length * 100;
-      ga('send', 'event', 'quiz', 'answer', 'quiz0', $scope.score);
+      ga('send', 'event', 'quiz', 'answer', 'quiz' + id, $scope.score);
       $location.hash('top');
       $anchorScroll();
     }
@@ -109,8 +121,6 @@
       $location.hash('top');
       $anchorScroll();
     }
-
-  }).config(function($mdIconProvider) {
 
   });
 </script>
