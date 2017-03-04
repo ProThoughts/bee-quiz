@@ -81,11 +81,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 <script type="text/javascript">    
   angular.module('MyApp', ['ngMaterial']).controller('AppCtrl', function($scope, $http, $location, $anchorScroll) {
-    $http.get("./api/stub.json").then(function(response) {
+
+    $http.get("./api/question1.json").then(function(response) {
       $scope.questions = response.data.questions;
       $scope.title = response.data.title;
       $scope.explanation = response.data.explanation;
       $scope.answer_ref = response.data.answer_ref;
+
     });
 
     $scope.submit = function() {
