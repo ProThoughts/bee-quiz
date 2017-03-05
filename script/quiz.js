@@ -1,5 +1,8 @@
-angular.module('MyApp', ['ngMaterial']).controller('QuizCtrl', function($scope, $http, $location, $anchorScroll) {
-  var questionFilePath = './api/question1.json';
+angular.module('MyApp')
+.controller('QuizCtrl', function($scope, $http, $location, $anchorScroll, $routeParams) {
+  console.log($routeParams);
+  var id = $routeParams.id;
+  var questionFilePath = './api/question' + id + '.json';
   $http.get(questionFilePath).then(function(response) {
     $scope.questions = response.data.questions;
     $scope.title = response.data.title;
@@ -13,7 +16,6 @@ angular.module('MyApp', ['ngMaterial']).controller('QuizCtrl', function($scope, 
     });
     $scope.score = correctQuestions.length / $scope.questions.length * 100;
     ga('send', 'event', 'quiz', 'answer', 'quiz' + id, $scope.score);
-    $location.hash('top');
     $anchorScroll();
   }
 
@@ -22,7 +24,6 @@ angular.module('MyApp', ['ngMaterial']).controller('QuizCtrl', function($scope, 
       value.value = null;
     });
     $scope.questionForm.$setPristine();
-    $location.hash('top');
     $anchorScroll();
   }
 });
