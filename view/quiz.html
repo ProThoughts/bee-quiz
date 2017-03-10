@@ -27,18 +27,20 @@
         <span ng-if="question.answer == 0">
           <strong>間違い</strong>
 	</span>
-        <span>: {{ question.explanation }}</span>
+        <span>: {{ question.explanation.text }}</span>
+        <div>=> <a href="{{ question.explanation.link}}" target="_blank">さらに詳しい解説はこちら</a></div>
       </div>
       <hr />
   </div>
   <div ng-if="questionForm.$submitted">
       <p class="score">あなたの得点は{{ score }} 点です</p>
       <button ng-click="reset()" type="button">再挑戦する</button>
+      <br><br>
     <div>
       <span>以下のページで分蜂について学んでみましょう。</span>
       <ul>
         <li><a href="https://syumatsu-yoho.com/38/node/1522" target="_blank">分蜂(分封、ぶんぽう)とは？ニホンミツバチが増える仕組み</a></li>
-        <li><a href="https://syumatsu-yoho.com/38/node/55" target="_blank">ニホンミツバチの捕獲方法と捕獲の8つのコツ</a></li>
+        <li><a href="https://syumatsu-yoho.com/38/node/55" target="_blank">ニホンミツバチの捕獲方法と捕獲の10つのコツ</a></li>
       </ul>
       <p>他にも、<a href="https://syumatsu-yoho.com/38/" target="_blank">週末養蜂家のニホンミツバチのおいしいはちみつ</a>では、初心者向けの飼育方法を解説しています。本とDVDで学びたい方には<a href="http://korenara.bee-book.net/" target="_blank">これならできる!ニホンミツバチの週末養蜂</a>がオススメです。</p>
         <p>また、ニホンミツバチについての質問は、<a href="https://38qa.net/" target="_blank">ニホンミツバチのQ&A</a>までお寄せください。ニホンミツバチ最大のコミュニティです。</p>
