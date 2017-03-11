@@ -8,6 +8,10 @@ angular.module('MyApp', ['ngMaterial', 'ngRoute'])
         templateUrl: 'view/quiz.html',
         controller: 'QuizCtrl'
       })
+      .when('/check/', {
+        templateUrl: 'view/check.html',
+        controller: 'CheckCtrl'
+      })
       .when('/quiz', {
         redirectTo: '/quiz/1'
       })
