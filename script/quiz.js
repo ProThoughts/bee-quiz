@@ -16,7 +16,7 @@ angular.module('MyApp')
     });
     $scope.score = correctQuestions.length / $scope.questions.length * 100;
     ga('send', 'event', 'quiz', 'answer', 'quiz' + id, $scope.score);
-    $anchorScroll();
+    $anchorScroll('top');
   }
 
   $scope.reset = function(){
@@ -24,7 +24,7 @@ angular.module('MyApp')
       value.value = null;
     });
     $scope.questionForm.$setPristine();
-    $anchorScroll();
+    $anchorScroll('top');
   }
 });
 

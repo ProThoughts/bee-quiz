@@ -1,7 +1,16 @@
 <section layout="row" layout-sm="column" layout-align="center center" layout-wrap novalidate>
   <div id="top" ng-controller="QuizCtrl">
-<h3>{{ title }}</h3>
-  <p>{{ explanation }}</p>
+  <md-card>
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">{{ title }}</span>
+        <span class="md-subhead">{{ explanation }}</span>
+      </md-card-title-text>
+    </md-card-title>
+
+    <md-card-content>
+      <div layout="row" layout-align="space-between center">
+
   <form name="questionForm" ng-submit="submit()" ng-cloak >
     <div ng-if="questionForm.$submitted">
       <p class="score">あなたの得点は{{ score }} 点です</p>
@@ -36,6 +45,8 @@
       <p class="score">あなたの得点は{{ score }} 点です</p>
       <button ng-click="reset()" type="button">再挑戦する</button>
       <br><br>
+      <span>他のクイズにもチャレンジする => <a href="https://quiz.syumatsu-yoho.com/#/">クイズ一覧</a></span>
+      <br><br>
     <div>
       <span>以下のページで分蜂について学んでみましょう。</span>
       <ul>
@@ -57,5 +68,8 @@
       </button>
     </div>
   </form>
+</div>
+    </md-card-content>
+  </md-card>
 
 

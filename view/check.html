@@ -1,0 +1,295 @@
+<section layout="row" layout-sm="column" layout-align="center center" layout-wrap novalidate>
+    <div id="top" ng-controller="CheckCtrl as ctrl">
+        <form name="checkForm" ng-submit="ctrl.submit()" ng-cloak>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">初心者向け!!ニホンミツバチの捕獲準備診断</span>
+                        <span class="md-subhead">万全の状態で捕獲にチャレンジしてください。1年に1回しかないチャンスです。あなたが、どのくらいしっかり準備できているか、チェックすることができます。この診断の前に、<a href="/#/" >ニホンミツバチクイズ</a>に挑戦し、全問正解するまで勉強しておきましょう。</span>
+                    </md-card-title-text>
+                </md-card-title>
+            </md-card>
+
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">1. 基本情報</span>
+                        <span class="md-subhead"></span>
+                    </md-card-title-text>
+                </md-card-title>
+
+                <md-card-content>
+                    <div layout="row" layout-align="space-between center">
+                        <span>あなたの巣箱を置く地域を教えてください。</span>
+                        <md-input-container>
+                            <label>都道府県</label>
+                            <md-select ng-model="pref" required>
+                                <md-option ng-repeat="(id, name) in ctrl.prefList" ng-value="id">
+                                    {{name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="row" layout-align="space-between center">
+                        <span>現在の飼育群れはいますか？</span>
+                        <md-input-container>
+                            <label>飼育群れ数</label>
+                            <md-select ng-model="numberOfBees" required>
+                                <md-option ng-value="0">いない</md-option>
+                                <md-option ng-repeat="n in [1,2,3,4]" ng-value="n">
+                                    {{n}} 群れ
+                                </md-option>
+                                <md-option ng-value="99999">5群れ以上</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="row" layout-align="space-between center">
+                        <span><a href="/#/" >ニホンミツバチクイズ</a>の全てのクイズに全問正解した(再挑戦可能)</span>
+                        <md-input-container>
+                            <label>クイズ結果</label>
+                            <md-select ng-model="quizOK" required>
+                                <md-option ng-value="1">はい</md-option>
+                                <md-option ng-value="0">いいえ</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </md-card-content>
+            </md-card>
+
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">2. 巣箱と設置場所</span>
+                        <span class="md-subhead"></span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <div layout="row" layout-align="space-between center">
+                        <span>設置予定の巣箱の総数</span>
+                        <md-input-container>
+                            <label>巣箱の総数</label>
+                            <md-select ng-model="numberOfHives" required>
+                                <md-option ng-repeat="n in [1,2,3,4,5,6,7,8,9,10]" ng-value="n">
+                                    {{n}} 個
+                                </md-option>
+                                <md-option ng-value="99999">11個以上</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between center">
+                        <span>設置場所の数。100メートル以上離した場所の数です。例) 自宅周辺に3箱置く場合は1ヶ所とカウントしてください。</span>
+                        <md-input-container>
+                            <label>設置場所の数</label>
+                            <md-select ng-model="numberOfPlaces" required>
+                                <md-option ng-repeat="n in [1,2,3,4]" ng-value="n">
+                                    {{n}} ヶ所
+                                </md-option>
+                                <md-option ng-value="99999">5ヶ所以上</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </md-card-content>
+            </md-card>
+
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">3. 誘引アイテムの利用</span>
+                        <span class="md-subhead">待ち箱ルアー、キンリョウヘン、蜜蝋について教えてください</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <div layout="row" layout-align="space-between center">
+                        <span>開花予定のキンリョウヘンの数</span>
+                        <md-input-container>
+                            <label>キンリョウヘンの数</label>
+                            <md-select ng-model="numberOfKins" required>
+                                <md-option ng-value="0">なし</md-option>
+                                <md-option ng-repeat="n in [1,2,3,4]" ng-value="n">
+                                    {{n}} 株
+                                </md-option>
+                                <md-option ng-value="99999">5株以上</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between center">
+                        <span>利用する待ち箱ルアーの数</span>
+                        <md-input-container>
+                            <label>待ち箱ルアーの数</label>
+                            <md-select ng-model="numberOfLures" required>
+                                <md-option ng-value="0">なし</md-option>
+                                <md-option ng-repeat="n in [1,2,3,4]" ng-value="n">
+                                    {{n}} 個
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between center">
+                        <span>巣箱への蜜蝋の塗装の有無</span>
+                        <md-input-container>
+                            <label>蜜蝋の塗装</label>
+                            <md-select ng-model="beeWaxUse" required>
+                                <md-option ng-value="0">なし</md-option>
+                                <md-option ng-value="1">あり</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </md-card-content>
+            </md-card>
+
+            <button class="md-raised md-primary md-button md-ink-ripple" ng-disabled="checkForm.$invalid" type="submit">
+              <span class="ng-scope">診断結果を見る</span>
+              <div class="md-ripple-container"></div>
+            </button>
+        </form>
+
+
+        <div ng-if="pref==0||pref==46">
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">注意</span>
+                        <span class="md-subhead"></span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <div layout="row" layout-align="space-between center">
+                        <span>{{ctrl.prefList[pref]}}にはニホンミツバチは生息していません。</span>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+
+        <div ng-if="pref!=0&&pref!=46">
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{ctrl.prefList[pref]}}の分蜂時期の目安</span>
+                        <span class="md-subhead">少しの遅れも命取りに！準備万端で分蜂時期を迎えよう</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <p>
+                        {{ctrl.prefList[pref]}}の分蜂の目安は、<strong>{{ctrl.dateList[ctrl.getSwarmDateKey(pref)]}}頃</strong>です。年によっても変わるため、<a href="http://www.mitsubachi-map.com/" target="_blank">分蜂マップ</a>を参考にしてください。
+                        分蜂の予想の10日前には準備を完了させておきましょう。分蜂群れがやってくる前に、新しい巣箱の場所を探し始めています。
+                    </p>
+                </md-card-content>
+            </md-card>
+        </div>
+
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">捕獲の知識</span>
+                    <span class="md-subhead" ng-if="quizOK==0">あなたはニホンミツバチクイズが100満点ではない</span>
+                    <span class="md-subhead" ng-if="quizOK==1">あなたはニホンミツバチクイズが100満点</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <p ng-if="quizOK==0">
+                    <a href="https://quiz.syumatsu-yoho.com/#/" target="_blank">ニホンミツバチクイズ</a>は、捕獲のために基本的な内容をまとめています。必ず100点が取れるように頑張ってください。</a>
+                </p>
+                <p ng-if="quizOK==1">
+                    ニホンミツバチクイズでどれも100点が取れれば、捕獲についての知識はおおよそ問題ありません。<a href="" target="_blank"></a>
+                </p>
+            </md-card-content>
+        </md-card>
+
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">巣箱の個数</span>
+                    <span class="md-subhead">あなたの用意する巣箱の個数<strong>{{numberOfHives}}個</strong>です。</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <p ng-if="numberOfHives<5">
+                  ニホンミツバチの捕獲は運の要素が強いです。巣箱の数が少ないと、捕獲はなかなか難しいです。なるべく多くの巣箱を設置するようにしてください。捕獲時には、小さめの簡易な巣箱でも捕獲できます。立派な台や、屋根は必要ありません。
+
+                  捕獲に最適なサイズで、お求めやすい価格の巣箱も販売しています。=> <a href="https://syumatsu-yoho.com/38/node/46" target="_blank">捕獲に最適！待ち箱セット(2段式重箱式巣箱)</a>
+                </p>
+                <p ng-if="numberOfHives>=5">
+                  捕獲にチャレンジするために、必要な巣箱は用意していただいているようですね。なるべく多くの巣箱を分散させて設置すると、捕獲に近づきます。
+                </p>
+            </md-card-content>
+        </md-card>
+
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">設置場所の数</span>
+                    <span class="md-subhead">あなたの用意する設置場所:<strong>{{numberOfPlaces}}ヶ所</strong></span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+              <p ng-if="numberOfPlaces<3">
+                巣箱の設置場所が少ないので、友人、知人を頼るなどしてなるべく多くの設置場所を確保してください。詳しくは<a href="https://syumatsu-yoho.com/38/node/1532">こちら</a>。
+              </p>
+              <p ng-if="numberOfHives >= numberOfPlaces * 2">
+                巣箱はなるべく分散して設置しましょう。巣箱は、自宅の前などの狭い範囲に何個もおいても、捕獲にはあまり効果的ではありません。近くにニホンミツバチが生息していない場合は、捕獲の確率は下がってしまいます。
+                <a href="https://syumatsu-yoho.com/38/node/1532" target="_blank">こちら</a>
+              </p>
+            </md-card-content>
+        </md-card>
+
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">蜜蝋の利用</span>
+                    <span class="md-subhead" ng-if="beeWaxUse==0">あなたは蜜蝋は利用しない</span>
+                    <span class="md-subhead" ng-if="beeWaxUse==1">あなたは蜜蝋は利用する</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <p ng-if="beeWaxUse==0">
+                  蜜蝋は分蜂群れの誘引に効果があり、ほぼ全ての愛好家が利用しています。ぜひ利用してください。詳しくは、<a href="https://syumatsu-yoho.com/38/node/54" target="_blank">こちら</a>
+                </p>
+                <p ng-if="beeWaxUse==1">
+                  蜜蝋を利用して、ニホンミツバチを捕まえましょう。全ての巣箱に塗るようにしてください。
+                </p>
+            </md-card-content>
+        </md-card>
+
+
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">キンリョウヘン、待ち箱ルアーの数</span>
+                    <span class="md-subhead">あなたの用意するキンリョウヘン:<strong>{{numberOfKins}}</strong>個、待ち箱ルアー: <strong>{{numberOfLures}}</strong>個</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+              <p ng-if="numberOfHives< (numberOfKins + numberOfLures)">
+                <p>巣箱に1つずつ、待ち箱ルアーかキンリョウヘンを用意すると、捕獲に近づきます。キンリョウヘンは、1株に花芽が複数ついた時には、切り花にすることで有効に使うことができます。詳しくは、<a href="https://syumatsu-yoho.com/38/node/1555" target="_blank">こちら</a>
+                </p>
+                <p>
+                これから用意される場合は、分蜂時期にキンリョウヘンを入手することは難しいので、待ち箱ルアーの活用をお勧めします。待ち箱ルアーについて詳しくは、<a href="http://xn--7ckf0b6c863w75p1t3e.net/" target="_blank">こちら</a>
+                </p>
+              </p>
+              <p ng-if="numberOfHives>=(numberOfKins + numberOfLures)">
+                十分な待ち箱ルアーとキンリョウヘンを用意されているようですね！あとはニホンミツバチが来るのを祈りましょう。
+              </p>
+            </md-card-content>
+        </md-card>
+
+        <md-card >
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">飼育群れの数</span>
+                    <span class="md-subhead"></span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+              <p ng-if="numberOfBees==0">
+                飼育群れがいない場合は、少し捕獲は大変です。野生の巣が近くにあったり、花にやってくるニホンミツバチを見つけたら、その近くに巣箱を設置してみましょう。
+              </p>
+              <p ng-if="numberOfBees>=1">
+                巣箱を飛び出した分蜂群は、一旦近くの樹木に集合します。ニホンミツバチは、樹木の太い枝の付け根に集合することが多いです。飼育群れから出て来る群れをうまく捕獲しましょう。
+                詳しくは、<a href="https://syumatsu-yoho.com/38/node/1535">こちら</a>
+              </p>
+            </md-card-content>
+        </md-card>
+    </div>
+</section>

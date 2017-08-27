@@ -1,0 +1,89 @@
+{{pref}}
+
+<div ng-if="pref==0||pref==46">
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">注意</span>
+                <span class="md-subhead"></span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <div layout="row" layout-align="space-between center">
+                <span>{{ctrl.prefList[pref]}}にはニホンミツバチは生息していません。</span>
+            </div>
+        </md-card-content>
+    </md-card>
+</div>
+
+<md-card>
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline">飼育知識</span>
+            <span class="md-subhead"></span>
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+        <div layout="row" layout-align="space-between center">
+            <div ng-if="quizOK==0">
+                <span>
+            <a href="/#/" >ニホンミツバチクイズ</a>は、捕獲には必要な基本的な内容ばかりです。すべて満点が取れるようにしてください。
+          </span>
+            </div>
+            <div ng-if="quizOK==1">
+                捕獲の前提知識は問題ありません。
+            </div>
+        </div>
+    </md-card-content>
+</md-card>
+
+
+<div>
+    <div ng-if="pref!=0&&pref!=46">
+        <div ng-if="ctrl.checkTiming(pref, startDate) == -2">
+            少し早すぎるかもしれません。
+            <a href="http://www.mitsubachi-map.com/">分蜂マップ</a>で
+        </div>
+
+        <div ng-if="ctrl.checkTiming(pref, startDate) == -1">
+            少し早めかもしれません。
+            <a href="http://www.mitsubachi-map.com/">分蜂マップ</a>で
+        </div>
+
+        <div ng-if="ctrl.checkTiming(pref, startDate) == 0">
+            バッチリのタイミングです。このタイミングで<a href="http://xn--7ckf0b6c863w75p1t3e.net/" target="_blank">待ち箱ルアー</a>を開封すれば、最も効果的に利用できます。
+        </div>
+
+        <div ng-if="ctrl.checkTiming(pref, startDate) == 1">
+            少し遅めかもしれません。
+        </div>
+
+        <div ng-if="ctrl.checkTiming(pref, startDate) == -2">
+            もう少し早めに対応しましょう。
+            <a href="http://www.mitsubachi-map.com/">分蜂マップ</a>で
+        </div>
+
+
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">開始時期</span>
+                    <span class="md-subhead">少しの遅れも命取りに！準備万端で分蜂時期を迎えよう</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <div layout="row">
+                    <p>
+                        {{ctrl.prefList[pref]}}の分蜂の目安は、<strong>{{ctrl.dateList[ctrl.getSwarmDateKey(pref)]}}頃</strong>です。年によっても変わるため、<a href="http://www.mitsubachi-map.com/" target="_blank">分蜂マップ</a>を参考にしてください。</p>
+                    </p>
+                </div>
+                <div layout="row">
+                    <p>
+                        <a href="http://xn--7ckf0b6c863w75p1t3e.net/" target="_blank">待ち箱ルアー</a>は、分蜂予想時期の5日から10日ほど前、<strong>{{ctrl.dateList[ctrl.getSwarmDateKey(pref) - 1]}}頃</strong>に開封して巣箱に取り付けてください。巣箱などの準備も、この頃には完了しておきましょう。
+                    </p>
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>
+</div>
